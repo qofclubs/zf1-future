@@ -93,10 +93,10 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
 
     /**
      * Compatibility for php 8.2 to stop error Deprecated: Creation of dynamic property
-     * @var object 
+     * @var object
      */
-    public  $contexts = null; 
-    
+    public  $contexts = null;
+
     /**
      * Helper Broker to assist in routing help requests to the proper object
      *
@@ -130,20 +130,14 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
      * @param array $invokeArgs Any additional invocation arguments
      * @return void
      */
-    public function __construct()
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = [])
     {
-
-    }
-
-
-    public function dispatcherInit(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = []){
         $this->setRequest($request)
              ->setResponse($response)
              ->_setInvokeArgs($invokeArgs);
         $this->_helper = new Zend_Controller_Action_HelperBroker($this);
         $this->init();
     }
-
 
     /**
      * Initialize object
@@ -558,7 +552,7 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
      * object to use
      * @return Zend_Controller_Response_Abstract
      */
-    public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
+    public function run(?Zend_Controller_Request_Abstract $request = null, ?Zend_Controller_Response_Abstract $response = null)
     {
         if (null !== $request) {
             $this->setRequest($request);
@@ -726,7 +720,7 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
      * @deprecated Deprecated as of Zend Framework 1.7. Use
      *             forward() instead.
      */
-    final protected function _forward($action, $controller = null, $module = null, array $params = null)
+    final protected function _forward($action, $controller = null, $module = null, ?array $params = null)
     {
         $this->forward($action, $controller, $module, $params);
     }
@@ -757,7 +751,7 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
      * @param array $params
      * @return void
      */
-    final public function forward($action, $controller = null, $module = null, array $params = null)
+    final public function forward($action, $controller = null, $module = null, ?array $params = null)
     {
         $request = $this->getRequest();
 
